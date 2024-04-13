@@ -1,3 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@media screen and (max-width: 720px) {
+  .custom {
+    flex-direction: column-reverse;
+  }
+
+  .custom-action {
+    display: flex;
+    flex-direction: row;
+  }
+}

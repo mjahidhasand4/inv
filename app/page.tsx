@@ -144,7 +144,7 @@ const Home = () => {
 
   return (
     <main className="max-w-[620px] mx-auto">
-      <div className="mx-auto flex items-start gap-4">
+      <div className="mx-auto flex custom items-start gap-4">
         <div className="max-w-[420px] border border-black p-4 my-4">
           <div className="mt-2 flex items-center justify-between">
             <h1 className="text-[24px] text-[#0f1111] font-semibold">
@@ -313,7 +313,7 @@ const Home = () => {
         </div>
         <Link
           href="/preview"
-          className="mt-4 text-[#0f1111] text-[14px] w-full mt-2 cursor-pointer rounded border border-slate-300 bg-gradient-to-b from-slate-50 to-slate-200 px-4 py-1 font-semibold hover:opacity-90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-300 focus-visible:ring-offset-2 active:opacity-100"
+          className="max-w-[420px] block mt-4 text-[#0f1111] text-[14px] w-full mt-2 cursor-pointer rounded border border-slate-300 bg-gradient-to-b from-slate-50 to-slate-200 px-4 py-1 font-semibold hover:opacity-90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-300 focus-visible:ring-offset-2 active:opacity-100"
         >
           Preview
         </Link>

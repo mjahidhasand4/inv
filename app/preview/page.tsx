@@ -104,30 +104,18 @@ const Preview = () => {
   const downloadAsPDF = () => {
     const previewElement = deliveryRef.current;
 
-    previewElement!.style.borderRadius = "0";
-    previewElement!.style.border = "none";
-    previewElement!.style.boxShadow = "none";
-
     if (previewElement) {
-      setTimeout(() => {
-        html2canvas(previewElement).then((canvas) => {
-          if (canvas.width > 0 && canvas.height > 0) {
-            const pdf = new jsPDF("p", "mm", "a4");
-            const imgData = canvas.toDataURL("image/png");
-            pdf.addImage(imgData, "PNG", 0, 0, 210, 297);
-            pdf.save("delivery_note.pdf");
-          } else {
-            console.error(
-              "Canvas dimensions are invalid. Unable to generate PDF."
-            );
-          }
-        });
-      }, 500);
+      const pdf = new jsPDF();
+      pdf.html(previewElement, {
+        callback: () => {
+          pdf.save("delivery_note.pdf");
+        },
+      });
     }
   };
   return (
     <main className="flex items-center justify-center">
-      <div className="flex my-4 mx-auto gap-4">
+      <div className="flex my-4 mx-auto gap-4 custom">
         <div
           ref={deliveryRef}
           className={`w-[360px] max-h-[96vh] px-2 py-1 border border-black/40 bg-white rounded`}
@@ -139,7 +127,7 @@ const Preview = () => {
             <p className="text-[10px] text-[#0f1111] font-semibold">0053875</p>
           </div>
 
-          <div className="border-2 p-2 border-black/80 bg-[#ddd] rounded-lg flex items-center justify-between">
+          <div className="border-2 p-1 border-black/80 bg-[#ddd] rounded-lg flex items-center justify-between">
             <span className="text-[10px] text-[#333] font-semibold">
               Date: {formatDate(data.date)}
             </span>
@@ -214,7 +202,7 @@ const Preview = () => {
           </div>
         </div>
 
-        <div className="w-[240px] flex flex-col items-start gap-2">
+        <div className="w-[240px] flex flex-col items-start gap-2 custom-action">
           <Link
             href="/"
             className="text-[#0f1111] text-[14px] w-full cursor-pointer rounded border border-slate-300 bg-gradient-to-b from-slate-50 to-slate-200 px-4 py-1 font-semibold hover:opacity-90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-300 focus-visible:ring-offset-2 active:opacity-100"
@@ -223,13 +211,13 @@ const Preview = () => {
           </Link>
           <button
             onClick={downloadAsImage}
-            className="text-left text-[#0f1111] text-[14px] w-full cursor-pointer rounded border border-slate-300 bg-gradient-to-b from-slate-50 to-slate-200 px-4 py-1 font-semibold hover:opacity-90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-300 focus-visible:ring-offset-2 active:opacity-100"
+            className="text-left whitespace-nowrap text-[#0f1111] text-[14px] w-full cursor-pointer rounded border border-slate-300 bg-gradient-to-b from-slate-50 to-slate-200 px-4 py-1 font-semibold hover:opacity-90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-300 focus-visible:ring-offset-2 active:opacity-100"
           >
             Download as Image
           </button>
           <button
             onClick={downloadAsPDF}
-            className="text-left text-[#0f1111] text-[14px] w-full cursor-pointer rounded border border-slate-300 bg-gradient-to-b from-slate-50 to-slate-200 px-4 py-1 font-semibold hover:opacity-90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-300 focus-visible:ring-offset-2 active:opacity-100"
+            className="text-left whitespace-nowrap text-[#0f1111] text-[14px] w-full cursor-pointer rounded border border-slate-300 bg-gradient-to-b from-slate-50 to-slate-200 px-4 py-1 font-semibold hover:opacity-90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-300 focus-visible:ring-offset-2 active:opacity-100"
           >
             Download as PDF
           </button>
