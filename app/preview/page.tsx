@@ -152,20 +152,14 @@ const Preview = () => {
             </div>
 
             <div className="mt-1 p-1 border-2 border-black/80 rounded">
-              <span className="text-[14px] text-[#333] font-bold block h-[31px] border-b border-black/30">
-                From:
-              </span>
-              <span className="text-[14px] text-[#333] font-medium block h-[31px] h-[31px] border-b border-black/30">
-                {data.from}
+              <span className="block h-[31px] border-b border-black/30">
+                <span className="text-[14px] text-[#333] font-bold">From:</span> <span className="text-[14px] text-[#333] font-medium">{data.from}</span>
               </span>
               <span className="text-[14px] text-[#333] font-medium block h-[31px] h-[31px] border-b border-black/30">
                 {data._from}
               </span>
               <span className="text-[14px] text-[#333] font-bold block h-[31px] h-[31px] border-b border-black/30">
-                To:
-              </span>
-              <span className="text-[14px] text-[#333] font-medium block h-[31px]">
-                {data.to}
+                <span className="text-[14px] text-[#333] font-bold">To:</span> <span className="text-[14px] text-[#333] font-medium">{data.to}</span>
               </span>
               <span className="text-[14px] text-[#333] font-medium block h-[31px]">
                 {data._to}
