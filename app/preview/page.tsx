@@ -1,9 +1,9 @@
 "use client";
 import { formatDate } from "@/lib";
-import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
 
 const Preview = () => {
   const deliveryRef = useRef<HTMLDivElement | null>(null);
@@ -11,7 +11,9 @@ const Preview = () => {
     date: new Date(),
     reference: "",
     from: "",
+    _from: "",
     to: "",
+    _to: "",
     sign: "",
     name: "",
     receivedInGoodCondition: true,
@@ -106,7 +108,7 @@ const Preview = () => {
 
     if (previewElement) {
       setTimeout(() => {
-        html2canvas(previewElement).then((canvas) => {
+        html2canvas(previewElement, { scale: 3 }).then((canvas) => {
           if (canvas.width > 0 && canvas.height > 0) {
             const pdf = new jsPDF("p", "mm", "a4");
             const imgData = canvas.toDataURL("image/png");
@@ -121,13 +123,14 @@ const Preview = () => {
       }, 500);
     }
   };
+  
   return (
     <main className="flex items-center justify-center">
       <div className="flex my-4 mx-auto gap-4 custom">
         <div className="border border-black/40">
           <div
             ref={deliveryRef}
-            className={`w-[360px] max-h-[96vh] px-2 py-1 bg-white`}
+            className={`w-[360px] max-h-[96vh] px-2 py-1 bg-white isolate`}
           >
             <div className="flex items-center justify-between">
               <h1 className="text-[18px] text-[#0f1111] font-bold mb-2">
@@ -155,11 +158,17 @@ const Preview = () => {
               <span className="text-[14px] text-[#333] font-medium block h-[31px] h-[31px] border-b border-black/30">
                 {data.from}
               </span>
+              <span className="text-[14px] text-[#333] font-medium block h-[31px] h-[31px] border-b border-black/30">
+                {data._from}
+              </span>
               <span className="text-[14px] text-[#333] font-bold block h-[31px] h-[31px] border-b border-black/30">
                 To:
               </span>
               <span className="text-[14px] text-[#333] font-medium block h-[31px]">
                 {data.to}
+              </span>
+              <span className="text-[14px] text-[#333] font-medium block h-[31px]">
+                {data._to}
               </span>
             </div>
 

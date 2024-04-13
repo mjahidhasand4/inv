@@ -10,7 +10,9 @@ const Home = () => {
     date: new Date(),
     reference: "",
     from: "",
+    _from: "",
     to: "",
+    _to: "",
     sign: "",
     name: "",
     receivedInGoodCondition: true,
@@ -140,8 +142,6 @@ const Home = () => {
     localStorage.setItem("preview", JSON.stringify({ ...data, items }));
   }, [data, items]);
 
-  
-
   return (
     <main className="max-w-[620px] mx-auto">
       <div className="mx-auto flex custom items-start gap-4">
@@ -181,18 +181,30 @@ const Home = () => {
             <label htmlFor="from" className="flex flex-col gap-0.5 mb-[6px]">
               <span className="text-[12px] text-[#333] font-medium">From</span>
               <input
-                id="from"
                 name="from"
                 className={`text-[#0F1111] text-[13px] outline-none h-[31px] py-[3px] px-[7px] border rounded-[3px] border-[#a6a6a6] border-t-[#949494] shadow-[0_1px_0_rgba(255,255,255,.5),_0_1px_0_rgba(0,0,0,.07)_inset] focus:bg-[#F7FEFF] focus:border-[#00453e]`}
+                value={data.from}
+                onChange={onChange}
+              />
+              <input
+                name="_from"
+                className={`text-[#0F1111] text-[13px] outline-none h-[31px] py-[3px] px-[7px] border rounded-[3px] border-[#a6a6a6] border-t-[#949494] shadow-[0_1px_0_rgba(255,255,255,.5),_0_1px_0_rgba(0,0,0,.07)_inset] focus:bg-[#F7FEFF] focus:border-[#00453e]`}
+                value={data._from}
                 onChange={onChange}
               />
             </label>
             <label htmlFor="to" className="flex flex-col gap-0.5 mb-[6px]">
               <span className="text-[12px] text-[#333] font-medium">To</span>
               <input
-                id="to"
                 name="to"
                 className={`text-[#0F1111] text-[13px] outline-none h-[31px] py-[3px] px-[7px] border rounded-[3px] border-[#a6a6a6] border-t-[#949494] shadow-[0_1px_0_rgba(255,255,255,.5),_0_1px_0_rgba(0,0,0,.07)_inset] focus:bg-[#F7FEFF] focus:border-[#00453e]`}
+                value={data.to}
+                onChange={onChange}
+              />
+              <input
+                name="_to"
+                className={`text-[#0F1111] text-[13px] outline-none h-[31px] py-[3px] px-[7px] border rounded-[3px] border-[#a6a6a6] border-t-[#949494] shadow-[0_1px_0_rgba(255,255,255,.5),_0_1px_0_rgba(0,0,0,.07)_inset] focus:bg-[#F7FEFF] focus:border-[#00453e]`}
+                value={data._to}
                 onChange={onChange}
               />
             </label>
