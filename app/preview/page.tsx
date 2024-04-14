@@ -4,8 +4,10 @@ import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import domtoimage from "dom-to-image";
 
 const Preview = () => {
+  const [img, setImg] = useState("");
   const deliveryRef = useRef<HTMLDivElement | null>(null);
   const [data, setData] = useState({
     date: new Date(),
@@ -93,39 +95,27 @@ const Preview = () => {
   const downloadAsImage = () => {
     const previewElement = deliveryRef.current;
 
-    if (previewElement) {
-      html2canvas(previewElement).then((canvas) => {
-        const link = document.createElement("a");
-        link.href = canvas.toDataURL();
-        link.download = "delivery_note.jpeg";
-        link.click();
-      });
-    }
+    domtoimage.toJpeg(previewElement!, { quality: 1 }).then(function (dataUrl) {
+      var link = document.createElement("a");
+      link.download = "my-image-name.jpeg";
+      link.href = dataUrl;
+      link.click();
+    });
   };
 
   const downloadAsPDF = () => {
     const previewElement = deliveryRef.current;
 
-    if (previewElement) {
-      setTimeout(() => {
-        html2canvas(previewElement, { scale: 3 }).then((canvas) => {
-          if (canvas.width > 0 && canvas.height > 0) {
-            const pdf = new jsPDF("p", "mm", "a4");
-            const imgData = canvas.toDataURL("image/png");
-            pdf.addImage(imgData, "PNG", 0, 0, 210, 297);
-            pdf.save("delivery_note.pdf");
-          } else {
-            console.error(
-              "Canvas dimensions are invalid. Unable to generate PDF."
-            );
-          }
-        });
-      }, 500);
-    }
+    domtoimage.toPng(previewElement!, { quality: 1 }).then(function (dataUrl) {
+      const pdf = new jsPDF("p", "mm", "a4");
+      pdf.addImage(dataUrl, "PNG", 0, 0, 210, 297);
+      pdf.save("delivery_note.pdf");
+    });
   };
-  
+
   return (
-    <main className="flex items-center justify-center">
+    <main className="flex flex-col items-center justify-center">
+      <img src={img} alt="" />
       <div className="flex my-4 mx-auto gap-4 custom">
         <div className="border border-black/40">
           <div
@@ -153,13 +143,19 @@ const Preview = () => {
 
             <div className="mt-1 p-1 border-2 border-black/80 rounded">
               <span className="block h-[31px] border-b border-black/30">
-                <span className="text-[14px] text-[#333] font-bold">From:</span> <span className="text-[14px] text-[#333] font-medium">{data.from}</span>
+                <span className="text-[14px] text-[#333] font-bold">From:</span>{" "}
+                <span className="text-[14px] text-[#333] font-medium">
+                  {data.from}
+                </span>
               </span>
               <span className="text-[14px] text-[#333] font-medium block h-[31px] h-[31px] border-b border-black/30">
                 {data._from}
               </span>
               <span className="text-[14px] text-[#333] font-bold block h-[31px] h-[31px] border-b border-black/30">
-                <span className="text-[14px] text-[#333] font-bold">To:</span> <span className="text-[14px] text-[#333] font-medium">{data.to}</span>
+                <span className="text-[14px] text-[#333] font-bold">To:</span>{" "}
+                <span className="text-[14px] text-[#333] font-medium">
+                  {data.to}
+                </span>
               </span>
               <span className="text-[14px] text-[#333] font-medium block h-[31px]">
                 {data._to}
@@ -204,7 +200,7 @@ const Preview = () => {
                 </span>
               </span>
               {data.sign && (
-                <img src={data.sign} className="w-auto h-[48px] object-fit" />
+                <img src={data.sign} className="w-auto h-[96px] object-fit" />
               )}
 
               <span className="text-[12px] text-[#333] font-medium w-full">
