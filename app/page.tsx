@@ -278,7 +278,7 @@ const Home = () => {
                     ref={(ref) => {
                       signPadRef.current = ref;
                     }}
-                    canvasProps={{ style: { width: "100%", height: "300%" } }}
+                    canvasProps={{ style: { width: "100%", height: "192px" } }}
                     clearOnResize={false}
                     onEnd={onSignChange}
                   />
